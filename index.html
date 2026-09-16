@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vector Web Studio - Portfolio</title>
+  <style>
+    /* =========================================================
+       GEMINI DARK THEME & NEON RED AMBIENT GLOW STYLES
+       ========================================================= */
+    :root {
+      --bg-color: #09090b;
+      --card-bg: rgba(22, 22, 29, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --accent-red: #ff2a5f;
+      --accent-glow: rgba(255, 42, 95, 0.35);
+      --code-tag: #ff4d79;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      --font-mono: "Fira Code", "Courier New", Courier, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Background Glow */
+    .glow-bg {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      height: 600px;
+      background: radial-gradient(circle at 50% 20%, rgba(229, 9, 20, 0.45) 0%, rgba(153, 0, 51, 0.2) 45%, transparent 75%);
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(40px);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Tag / Mono Header Styling */
+    .tag {
+      font-family: var(--font-mono);
+      color: var(--code-tag);
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem 5rem;
+    }
+
+    .logo-container {
+      margin-bottom: 1.5rem;
+      display: inline-block;
+    }
+
+    .logo-v {
+      width: 90px;
+      height: auto;
+      filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+      color: #ffffff;
+    }
+
+    .hero p {
+      font-style: italic;
+      color: #e4e4e7;
+      font-size: 1.25rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #25d366;
+      color: #000;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      text-decoration: none;
+      box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .whatsapp-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px rgba(37, 211, 102, 0.7);
+    }
+
+    .whatsapp-btn svg {
+      width: 28px;
+      height: 28px;
+      fill: currentColor;
+    }
+
+    /* Content Cards & Grids */
+    .section {
+      margin-bottom: 5rem;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+      color: #ffffff;
+    }
+
+    p.description {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+      max-width: 750px;
+    }
+
+    /* Stats Banner */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #ffffff;
+      display: block;
+    }
+
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Horizontal Scroll / Grid for Services */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      backdrop-filter: blur(10px);
+      transition: border-color 0.3s ease;
+    }
+
+    .card:hover {
+      border-color: rgba(255, 42, 95, 0.4);
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      color: #ffffff;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Code Quote Block */
+    .quote-box {
+      border-left: 2px solid var(--code-tag);
+      background: rgba(255, 42, 95, 0.04);
+      padding: 1.25rem 1.5rem;
+      margin: 2.5rem 0;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: #d4d4d8;
+      line-height: 1.7;
+    }
+
+    /* Live Demos Interactive Selector */
+    .demo-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .demo-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 0.6rem 1rem;
+      border-radius: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .demo-btn.active {
+      background: rgba(255, 42, 95, 0.15);
+      border-color: var(--accent-red);
+      color: #ffffff;
+    }
+
+    .demo-btn .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #555;
+    }
+
+    .demo-btn.active .dot {
+      background-color: #ff2a5f;
+      box-shadow: 0 0 8px #ff2a5f;
+    }
+
+    /* Mock Browser Window for Live Demos */
+    .browser-window {
+      background: #111116;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .browser-header {
+      background: #181820;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .browser-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #333;
+    }
+
+    .browser-url {
+      background: #09090b;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+      margin-left: 10px;
+      flex-grow: 1;
+      max-width: 300px;
+    }
+
+    .browser-body {
+      padding: 2rem;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Interactive Demo Content */
+    .demo-ui h4 {
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .demo-ui p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .demo-action-btn {
+      display: inline-block;
+      background: var(--accent-red);
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.85rem;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Pricing Section */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .pricing-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .pricing-tier {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .pricing-price {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    /* Footer / CTA Section */
+    .footer-cta {
+      text-align: center;
+      padding: 4rem 1rem 2rem;
+      border-top: 1px solid var(--card-border);
+    }
+
+    .contact-number {
+      display: inline-block;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-decoration: none;
+      margin-top: 1.5rem;
+      border-bottom: 2px solid var(--accent-red);
+      padding-bottom: 4px;
+      letter-spacing: 1px;
+    }
+
+    .contact-number:hover {
+      color: var(--accent-red);
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2.2rem; }
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Gemini Theme Ambient Glow -->
+  <div class="glow-bg"></div>
+
+  <div class="container">
+    
+    <!-- Hero Section -->
+    <header class="hero">
+      <div class="logo-container">
+        <!-- SVG Vector Web Studio Logo -->
+        <svg class="logo-v" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0L45 80L70 80L25 0H0Z" fill="white"/>
+          <path d="M75 0L100 40L85 40L67.5 0H75Z" fill="white"/>
+          <text x="12" y="28" fill="#000" font-size="6" font-family="sans-serif" font-weight="bold" transform="rotate(60 12 28)">Vector web studio</text>
+        </svg>
+      </div>
+      <h1>Vector studio</h1>
+      <p>High-performance web architecture built to capture premium leads.</p>
+      
+      <a href="https://wa.me/27727367095" class="whatsapp-btn" target="_blank" aria-label="WhatsApp Contact">
+        <svg viewBox="0 0 24 24">
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+        </svg>
+      </a>
+    </header>
+
+    <!-- Section 1: Built From Scratch -->
+    <section class="section">
+      <span class="tag">// WEB DESIGN, BUILT FROM SCRATCH</span>
+      <h2>We build sites that look built, not templated.</h2>
+      <p class="description">
+        Whatever your business does, you don't need another generic template - you need a site that reads as trustworthy the second it loads. We design and build every project from the ground up, matched to your brand, not a theme.
+      </p>
+      
+      <span class="tag" style="font-size:0.75rem; margin-top:1.5rem;">EVERY PROJECT, HANDCRAFTED</span>
+    </section>
+
+    <!-- Section 2: Stats & Scope -->
+    <section class="section">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-number">100%</span>
+          <span class="stat-label">Custom Typography Per Brand</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">ZERO</span>
+          <span class="stat-label">Shared Templates</span>
+        </div>
+      </div>
+
+      <span class="tag">// WHAT WE BUILD</span>
+      <h2>If it needs a website, we can build it.</h2>
+      <p class="description">
+        From local service businesses to full e-commerce stores, from portfolios to booking platforms - every site starts with your brand, not a template picker. Here's the kind of work we take on.
+      </p>
+
+      <div class="card-grid">
+        <div class="card">
+          <h3>Business & Service Sites</h3>
+          <p>Local and national service businesses that need to be found, trusted, and contacted fast.</p>
+        </div>
+        <div class="card">
+          <h3>E-Commerce Stores</h3>
+          <p>Product catalogs, high-converting checkout flows, and seamless customer management.</p>
+        </div>
+        <div class="card">
+          <h3>Booking & Quote Platforms</h3>
+          <p>Automated appointment scheduling and custom quote calculators built directly into your site.</p>
+        </div>
+      </div>
+
+      <div class="quote-box">
+        <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px;">&lt;- SWIPE TO SEE MORE -&gt;</div>
+        // Every project gets its own type system, color palette, and layout - no shared component skin, no theme marketplace. That's the difference between reskinning a template and designing for your business.
+      </div>
+    </section>
+
+    <!-- Section 3: Live Demos (Includes New Demos) -->
+    <section class="section">
+      <span class="tag">// LIVE DEMOS</span>
+      <h2>See the conversion features in action.</h2>
+      <p class="description">
+        Fully-interactive niche builds - not static mockups. Switch between them and use the calculators, forms, and booking flows yourself, right here.
+      </p>
+
+      <!-- Interactive Demo Buttons (Original + New Demos Added) -->
+      <div class="demo-buttons">
+        <button class="demo-btn active" onclick="switchDemo('sunforge', this)">
+          <span class="dot"></span> Sunforge Power
+        </button>
+        <button class="demo-btn" onclick="switchDemo('meridian', this)">
+          <span class="dot"></span> Meridian Clinic
+        </button>
+        <button class="demo-btn" onclick="switchDemo('ironclad', this)">
+          <span class="dot"></span> Ironclad Logistics
+        </button>
+        <button class="demo-btn" onclick="switchDemo('vantage', this)">
+          <span class="dot"></span> Vantage Wraps
+        </button>
+        <!-- NEW DEMOS -->
+        <button class="demo-btn" onclick="switchDemo('towing', this)">
+          <span class="dot"></span> Apex Towing (NEW)
+        </button>
+        <button class="demo-btn" onclick="switchDemo('plumbing', this)">
+          <span class="dot"></span> Titan Plumbing (NEW)
+        </button>
+        <button class="demo-btn" onclick="switchDemo('ecommerce', this)">
+          <span class="dot"></span> Aura E-Commerce (NEW)
+        </button>
+      </div>
+
+      <!-- Interactive Browser Showcase Container -->
+      <div class="browser-window">
+        <div class="browser-header">
+          <div class="browser-dot"></div>
+          <div class="browser-dot"></div>
+          <div class="browser-dot"></div>
+          <div class="browser-url" id="demo-url">sunforgepower.co.za</div>
+        </div>
+        <div class="browser-body" id="demo-content">
+          <!-- Dynamic Content Rendered Here via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Pricing -->
+    <section class="section">
+      <span class="tag">// PRICING</span>
+      <h2>Straightforward tiers, no hidden scope.</h2>
+      <p class="description">
+        Every project is scoped to fit the work, not squeezed into a package. These ranges give you a starting point before we talk specifics.
+      </p>
+
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <span class="pricing-tier">Standard Business Site</span>
+          <div class="pricing-price">R5,000</div>
+        </div>
+        <div class="pricing-card">
+          <span class="pricing-tier">Premium Lead-Gen Engine</span>
+          <div class="pricing-price">R25,000 - R30,000</div>
+        </div>
+        <div class="pricing-card">
+          <span class="pricing-tier">Custom Enterprise Suite</span>
+          <div class="pricing-price">R45,000+</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Contact Footer -->
+    <footer class="footer-cta">
+      <span class="tag">// LET'S BUILD YOURS</span>
+      <h2 style="margin-bottom:0.5rem;">VECTOR WEB STUDIO</h2>
+      <p class="description" style="margin: 0 auto;">
+        Websites built from scratch for any business that needs to be found, trusted, and called.
+      </p>
+      
+      <a href="tel:0727367095" class="contact-number">0727367095</a>
+    </footer>
+
+  </div>
+
+  <!-- JavaScript Interactive Engine -->
+  <script>
+    // Demo Database containing Original + NEW Demos
+    const demoData = {
+      sunforge: {
+        url: "sunforgepower.co.za",
+        title: "Sunforge Power - Solar ROI Calculator",
+        desc: "Calculate instant solar savings for residential and commercial properties.",
+        actionText: "Calculate Solar Savings",
+        actionFn: () => alert("Interactive Solar ROI Engine Loaded!")
+      },
+      meridian: {
+        url: "meridianclinic.co.za",
+        title: "Meridian Clinic - Instant Booking Portal",
+        desc: "Seamless appointment scheduling engine with automated WhatsApp SMS reminders.",
+        actionText: "Book Appointment Demo",
+        actionFn: () => alert("Patient Scheduling Flow Triggered!")
+      },
+      ironclad: {
+        url: "ironcladlogistics.co.za",
+        title: "Ironclad Logistics - Freight Rate Estimator",
+        desc: "Dynamic distance and payload weight quote calculator for heavy haulage.",
+        actionText: "Get Instant Shipping Estimate",
+        actionFn: () => alert("Freight Calculation Complete!")
+      },
+      vantage: {
+        url: "vantage-wraps.co.za",
+        title: "Vantage Wraps - 3D Vehicle Visualizer",
+        desc: "Interactive vinyl wrap color switcher and visual pricing estimator.",
+        actionText: "Open Color Configurator",
+        actionFn: () => alert("Vehicle Visualizer Loaded!")
+      },
+      // NEW DEMO 1
+      towing: {
+        url: "apextowing.co.za",
+        title: "Apex Towing & Recovery - 24/7 Roadside Dispatch",
+        desc: "One-tap emergency location sharing and instant towing cost estimator.",
+        actionText: "Request Emergency Tow Now",
+        actionFn: () => alert("GPS Location Acquired! Tow Truck Dispatched (Demo).")
+      },
+      // NEW DEMO 2
+      plumbing: {
+        url: "titanplumbing.co.za",
+        title: "Titan Plumbing & Heating - Instant Quote Engine",
+        desc: "Interactive leakage and pipe repair estimate system with photo uploads.",
+        actionText: "Estimate Repair Cost",
+        actionFn: () => alert("Plumbing Estimate: R850 (Call-out + Basic Leak Repair)")
+      },
+      // NEW DEMO 3
+      ecommerce: {
+        url: "aura-apparel.co.za",
+        title: "Aura E-Commerce - Ultra-Fast Checkout",
+        desc: "High-converting product showcase with instant PayFast payment integration.",
+        actionText: "Test Quick Checkout Flow",
+        actionFn: () => alert("Simulated Express Checkout Screen Initialized!")
+      }
+    };
+
+    function switchDemo(demoKey, btnElement) {
+      // Update active button styling
+      document.querySelectorAll('.demo-btn').forEach(btn => btn.classList.remove('active'));
+      btnElement.classList.add('active');
+
+      // Fetch demo content
+      const data = demoData[demoKey];
+      
+      // Update Browser UI
+      document.getElementById('demo-url').innerText = data.url;
+      
+      const contentContainer = document.getElementById('demo-content');
+      contentContainer.innerHTML = `
+        <div class="demo-ui">
+          <h4>${data.title}</h4>
+          <p>${data.desc}</p>
+          <button class="demo-action-btn" onclick="demoData['${demoKey}'].actionFn()">${data.actionText}</button>
+        </div>
+      `;
+    }
+
+    // Initialize Default Demo on load
+    document.addEventListener("DOMContentLoaded", () => {
+      switchDemo('sunforge', document.querySelector('.demo-btn'));
+    });
+  </script>
+</body>
+</html>
